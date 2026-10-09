@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- XML declaration: version 1.0 and UTF-8 encoding for Maven config file -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <!-- Maven POM model version (standard 4.0.0) -->
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- ===== PARENT POM ===== -->
+    <!-- Inherit Spring Boot configuration from the parent starter-parent.
+         This gives us: Spring Boot dependency versions, plugin config, and sensible defaults. -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <!-- Spring Boot version: 4.1.1 (latest as of this project) -->
+        <version>4.1.1</version>
+        <!-- relativePath tells Maven to look in parent directory for parent POM -->
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <!-- ===== PROJECT IDENTITY ===== -->
+    <!-- Group ID: unique namespace for this project (typically company/organization domain) -->
+    <groupId>com.maz</groupId>
+
+    <!-- Artifact ID: project name in Maven (used as jar filename) -->
+    <artifactId>hotel-booking-system</artifactId>
+
+    <!-- Project version: 0.0.1-SNAPSHOT means development version, not a release -->
+    <!-- Spring Boot parent provides managed versions so you don't have to specify every version -->
+    <version>0.0.1-SNAPSHOT</version>
+
+    <!-- Friendly project name (optional) -->
+    <name/>
+
+    <!-- Project description (optional) -->
+    <description/>
+
+    <!-- Project homepage URL (optional) -->
+    <url/>
+
+    <!-- Open source license info (optional) -->
+    <licenses>
+        <license/>
+    </licenses>
+
+    <!-- Team member info (optional) -->
+    <developers>
+        <developer/>
+    </developers>
+
+    <!-- Source Control Management info (optional) -->
+    <!-- Used for Git/SVN repository integration -->
+    <scm>
+        <connection/>
+        <developerConnection/>
+        <tag/>
+        <url/>
+    </scm>
+
+    <!-- ===== BUILD PROPERTIES ===== -->
+    <!-- Central place to define project variables used throughout pom.xml -->
+    <properties>
+        <!-- Compile project with Java 17 -->
+        <java.version>17</java.version>
+    </properties>
+
+    <!-- ===== DEPENDENCIES ===== -->
+    <!-- Libraries Maven will download and add to project classpath -->
+    <dependencies>
+
+        <!-- ===== CORE DEPENDENCIES ===== -->
+
+        <!-- Spring Data JPA: provides JPA/Hibernate integration, repositories, and entity management -->
+        <!-- This is the bridge between Java objects and database tables -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+
+        <!-- Spring Validation: provides Jakarta Bean Validation (@NotNull, @NotBlank, etc.) -->
+        <!-- Used for validating HTTP request DTOs and entities -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+        <!-- Spring WebMVC: provides REST controller support and HTTP handling -->
+        <!-- This is the web layer that handles incoming HTTP requests -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webmvc</artifactId>
+        </dependency>
+
+        <!-- Springdoc OpenAPI UI: auto-generates Swagger/OpenAPI documentation -->
+        <!-- Creates /api-docs (JSON spec) and /swagger-ui.html (interactive UI) -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+
+        <!-- PostgreSQL JDBC Driver: allows Java to connect to PostgreSQL database -->
+        <!-- scope=runtime means it is only needed when app runs, not at compile-time -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- ===== TEST DEPENDENCIES ===== -->
+        <!-- scope=test means these are only used during testing, not in production -->
+
+        <!-- General testing framework: includes JUnit 5, Mockito, AssertJ, Spring Test -->
+        <!-- Used for overall unit and integration tests -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Sliced tests (DataJpaTest, WebMvcTest) load only what they need for faster testing -->
+        <!-- JPA/repository testing: sliced test context for @DataJpaTest -->
+        <!-- Loads only the repository layer for faster tests without full app startup -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- MVC/controller testing: sliced test context for @WebMvcTest -->
+        <!-- Loads only the web layer (controllers) and includes MockMvc for simulating HTTP requests -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webmvc-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Validation testing: support for testing validators and constraint annotations -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Flyway database migration: manages schema changes and versioning -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-flyway</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-database-postgresql</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-flyway-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <!-- ===== BUILD CONFIGURATION ===== -->
+    <!-- Defines how Maven packages and builds the application -->
+    <build>
+        <!-- Maven plugins: tools for building, testing, packaging -->
+        <plugins>
+
+            <!-- Spring Boot Maven Plugin: enables mvn spring-boot:run and creates executable JAR -->
+            <!-- This plugin packages the app as a standalone executable JAR with embedded Tomcat -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+        </plugins>
+    </build>
+
+</project>
